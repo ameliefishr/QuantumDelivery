@@ -1,26 +1,36 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css'
 import QLogo from './assets/quantumicon.png'
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 
-// Array of quantum computing facts
-const quantumFacts = [
-    "Quantum computers use qubits instead of traditional bits.",
-    "Superposition allows qubits to be in multiple states simultaneously.",
-    "Quantum entanglement enables correlations between qubits regardless of distance.",
-    "Quantum computing has the potential to solve complex problems much faster than classical computers.",
-    "Quantum algorithms, such as Shor's algorithm, can efficiently factor large numbers.",
-    "Error correction is a significant challenge in building practical quantum computers.",
-    "Quantum supremacy refers to the ability of quantum computers to outperform classical computers in certain tasks.",
-    "Quantum cryptography offers theoretically unbreakable encryption methods."
-];
 
 const RandomFactGenerator = () => {
-    const [fact, setFact] = useState(quantumFacts[0]);
+    const [fact, setFact] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const generateFact = () => {
-        const randomIndex = Math.floor(Math.random() * quantumFacts.length);
-        setFact(quantumFacts[randomIndex]);
+    // Fetch random fact on component mount
+    useEffect(() => {
+        fetchRandomFact();
+    }, []); // Empty dependency array ensures the effect runs only once on mount
+
+
+    // Function to fetch random fact from the backend
+    const fetchRandomFact = async () => {
+        setLoading(true)
+        //'https://quantumdeliverybackend.azurewebsites.net/randomfact'
+        try {
+            const response = await fetch('https://quantumdeliverybackend.azurewebsites.net/randomfact');
+            if (!response.ok) {
+                throw new Error('Failed to fetch random fact');
+            }
+            const data = await response.json();
+            setFact(data.fact);
+        } catch (error) {
+            console.error('Error fetching random fact:', error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -31,7 +41,8 @@ const RandomFactGenerator = () => {
                 <div>
                     <p>{fact}</p>
                 </div>
-                <Button variant='contained' color='secondary' onClick={generateFact}  >New Fact</Button>
+                <Button variant={loading ? 'disabled' : 'contained' } color='secondary' onClick={fetchRandomFact}  >
+                {loading ? <CircularProgress size={24} /> : 'New Fact'}</Button>
             </div>
         </div>
     );
