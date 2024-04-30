@@ -17,7 +17,8 @@ const RandomFactGenerator = () => {
 
     // Function to fetch random fact from the backend
     const fetchRandomFact = async () => {
-        setLoading(true)
+        setLoading(true);
+        const startTime = performance.now(); // Record start time
         //'https://quantumdeliverybackend.azurewebsites.net/randomfact'
         try {
             const response = await fetch('https://quantumdeliverybackend.azurewebsites.net/randomfact');
@@ -30,6 +31,9 @@ const RandomFactGenerator = () => {
             console.error('Error fetching random fact:', error.message);
         } finally {
             setLoading(false);
+            const endTime = performance.now(); // Record end time
+            const duration = endTime - startTime; // Calculate duration
+            console.log('Request duration:', duration, 'milliseconds');
         }
     };
 
