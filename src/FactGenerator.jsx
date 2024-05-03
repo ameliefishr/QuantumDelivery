@@ -77,7 +77,7 @@ const RandomFactGenerator = () => {
             <h1>Quantum Computing Facts</h1>
             <div className="fact-container">
                 <div>
-                    <p>Updated 3/05/24 4:17 pm</p>
+                    <p>Azure Branch Updated 3/05/24 5:39 pm</p>
                 </div>
                 <div>
                     <p>{fact}</p>
