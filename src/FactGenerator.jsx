@@ -7,7 +7,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 const RandomFactGenerator = () => {
     const [fact, setFact] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [loadingFact, setLoadingFact] = useState(false);
+    const [loadingLocation, setLoadingLocation] = useState(false);
     const [location, setLocation] = useState('Not Found')
 
     // Fetch random fact on component mount
@@ -19,7 +20,7 @@ const RandomFactGenerator = () => {
 
     // Function to fetch random fact from the backend
     const fetchRandomFact = async () => {
-        setLoading(true);
+        setLoadingFact(true);
         const startTime = performance.now(); // Record start time
         //'https://quantumdeliverybackend.azurewebsites.net/randomfact'
         try {
@@ -32,7 +33,7 @@ const RandomFactGenerator = () => {
         } catch (error) {
             console.error('Error fetching random fact:', error.message);
         } finally {
-            setLoading(false);
+            setLoadingFact(false);
             const endTime = performance.now(); // Record end time
             const duration = endTime - startTime; // Calculate duration
             console.log('Request duration:', duration, 'milliseconds');
@@ -42,7 +43,7 @@ const RandomFactGenerator = () => {
 
     // Function to fetch random fact from the backend
     const fetchRegion = async () => {
-        setLoading(true);
+        setLoadingLocation(true);
         const startTime = performance.now(); // Record start time
         try {
             const ipResponse = await fetch('https://api.ipify.org?format=json');
@@ -62,7 +63,7 @@ const RandomFactGenerator = () => {
         } catch (error) {
             console.error('Error fetching region:', error.message);
         } finally {
-            setLoading(false);
+            setLoadingLocation(false);
             const endTime = performance.now(); // Record end time
             const duration = endTime - startTime; // Calculate duration
             console.log('Two Public API request duration:', duration, 'milliseconds');
@@ -76,17 +77,20 @@ const RandomFactGenerator = () => {
             <h1>Quantum Computing Facts</h1>
             <div className="fact-container">
                 <div>
+                    <p>Updated 3/05/24 4:17 pm</p>
+                </div>
+                <div>
                     <p>{fact}</p>
                 </div>
-                <Button variant={loading ? 'disabled' : 'contained' } color='secondary' onClick={fetchRandomFact}  >
-                {loading ? <CircularProgress size={24} /> : 'New Fact'}</Button>
+                <Button variant={loadingFact ? 'disabled' : 'contained' } color='secondary' onClick={fetchRandomFact}  >
+                {loadingFact ? <CircularProgress size={24} /> : 'New Fact'}</Button>
             </div>
             <div className="region-container">
                 <div>
                     <p>You are at: {location}</p>
                 </div>
-                <Button variant={loading ? 'disabled' : 'contained' } color='primary' onClick={fetchRegion}  >
-                {loading ? <CircularProgress size={24} /> : 'Read Location'}</Button>
+                <Button variant={loadingLocation ? 'disabled' : 'contained' } color='primary' onClick={fetchRegion}  >
+                {loadingLocation? <CircularProgress size={24} /> : 'Read Location'}</Button>
             </div>
         </div>
     );
