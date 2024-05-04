@@ -24,7 +24,7 @@ const RandomFactGenerator = () => {
         const startTime = performance.now(); // Record start time
         //'https://quantumdeliverybackend.azurewebsites.net/randomfact'
         try {
-            const response = await fetch('https://20.119.0.48/randomfact');
+            const response = await fetch('https://quantumdeliverybackend.azurewebsites.net/randomfact');
             if (!response.ok) {
                 throw new Error('Failed to fetch random fact');
             }
@@ -77,7 +77,7 @@ const RandomFactGenerator = () => {
             <h1>Quantum Computing Facts</h1>
             <div className="fact-container">
                 <div>
-                    <p>Azure Branch Updated 3/05/24 5:39 pm</p>
+                    <p>Azure Branch Updated 4/05/24 3:30 pm</p>
                 </div>
                 <div>
                     <p>{fact}</p>
