@@ -60,13 +60,14 @@ const RandomFactGenerator = () => {
             // Use user's IP address to fetch region information
             const response = await fetch(`https://ipapi.co/${userIP}/json/`);
             if (!response.ok) {
-                throw new Error('Failed to fetch random fact');
+                console.log("error in fetch region response")
+                throw new Error('Failed to fetch location information');
             }
             const data = await response.json();
             setLocation(`${data.city}, ${data.region}`);
             setLongitude(data.longitude)
             setLatitude(data.latitude)
-            //console.log("Latitude is " + data.latitude)
+            console.log("Latitude in fact gen is " + data.latitude)
         } catch (error) {
             console.error('Error fetching region:', error.message);
         } finally {
@@ -84,7 +85,7 @@ const RandomFactGenerator = () => {
             <h1>Quantum Computing Facts</h1>
             <div className="fact-container">
                 <div>
-                    <p>Azure Branch Updated 6/05/24 12:06 pm</p>
+                    <p>Azure Branch Updated 6/05/24 03:21 pm</p>
                 </div>
                 <div>
                     <p>{fact}</p>
@@ -100,7 +101,7 @@ const RandomFactGenerator = () => {
                 {loadingLocation? <CircularProgress size={24} /> : 'Read Location'}</Button>
             </div>
 
-            {loadingLocation ? <CircularProgress size={24}/> : <MapComponent longitude={longitude} latitude={latitude} />  }
+            <MapComponent longitude={longitude} latitude={latitude} />
             
         </div>
     );
