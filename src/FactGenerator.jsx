@@ -3,13 +3,16 @@ import './App.css'
 import QLogo from './assets/quantumicon.png'
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
+import MapComponent from './MapComponent.jsx';
 
 
 const RandomFactGenerator = () => {
     const [fact, setFact] = useState('');
     const [loadingFact, setLoadingFact] = useState(false);
     const [loadingLocation, setLoadingLocation] = useState(false);
-    const [location, setLocation] = useState('Not Found')
+    const [location, setLocation] = useState('Not Found');
+    const [latitude, setLatitude] = useState(-70);
+    const [longitude, setLongitude] = useState(115);
 
     // Fetch random fact on component mount
     useEffect(() => {
@@ -52,14 +55,19 @@ const RandomFactGenerator = () => {
             }
             const ipData = await ipResponse.json();
             const userIP = ipData.ip;
+            console.log("Ip is " + userIP);
     
             // Use user's IP address to fetch region information
             const response = await fetch(`https://ipapi.co/${userIP}/json/`);
             if (!response.ok) {
-                throw new Error('Failed to fetch random fact');
+                console.log("error in fetch region response")
+                throw new Error('Failed to fetch location information');
             }
             const data = await response.json();
             setLocation(`${data.city}, ${data.region}`);
+            setLongitude(data.longitude)
+            setLatitude(data.latitude)
+            console.log("Latitude in fact gen is " + data.latitude)
         } catch (error) {
             console.error('Error fetching region:', error.message);
         } finally {
@@ -77,7 +85,7 @@ const RandomFactGenerator = () => {
             <h1>Quantum Computing Facts</h1>
             <div className="fact-container">
                 <div>
-                    <p>Updated 3/05/24 4:17 pm</p>
+                    <p>Azure Branch Updated 6/05/24 03:21 pm</p>
                 </div>
                 <div>
                     <p>{fact}</p>
@@ -92,8 +100,11 @@ const RandomFactGenerator = () => {
                 <Button variant={loadingLocation ? 'disabled' : 'contained' } color='primary' onClick={fetchRegion}  >
                 {loadingLocation? <CircularProgress size={24} /> : 'Read Location'}</Button>
             </div>
+
+            <MapComponent longitude={longitude} latitude={latitude} />
+            
         </div>
     );
 };
-
+////-32.01
 export default RandomFactGenerator;
