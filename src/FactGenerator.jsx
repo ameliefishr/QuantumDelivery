@@ -4,6 +4,7 @@ import QLogo from './assets/quantumicon.png'
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import MapComponent from './MapComponent.jsx';
+import * as Constants from './Constants.js';
 
 
 const RandomFactGenerator = () => {
@@ -25,14 +26,13 @@ const RandomFactGenerator = () => {
     const fetchRandomFact = async () => {
         setLoadingFact(true);
         const startTime = performance.now(); // Record start time
-        //'https://quantumdeliverybackend.azurewebsites.net/randomfact'
         try {
-            const response = await fetch('https://quantumdeliverybackend.azurewebsites.net/randomfact');
+            const response = await fetch(Constants.DATA_ENDPOINT + "/QuantumFact");
             if (!response.ok) {
                 throw new Error('Failed to fetch random fact');
             }
-            const data = await response.json();
-            setFact(data.fact);
+            const data = await response.text();
+            setFact(data);
         } catch (error) {
             console.error('Error fetching random fact:', error.message);
         } finally {
