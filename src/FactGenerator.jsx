@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './App.css'
-import QLogo from './assets/quantumicon.png'
+import Rlogo from './assets/route.png'
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import MapComponent from './MapComponent.jsx';
@@ -81,7 +81,7 @@ const RandomFactGenerator = () => {
 
     return (
         <div>
-            <img src={QLogo} className="icon" alt="Quantum logo" />
+            <img src={Rlogo} className="icon" alt="Quantum logo" />
             <h1>Route Finder</h1>
             <div className="fact-container">
                 <div>
