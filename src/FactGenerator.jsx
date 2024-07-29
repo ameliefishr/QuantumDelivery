@@ -82,7 +82,7 @@ const RandomFactGenerator = () => {
     return (
         <div>
             <img src={QLogo} className="icon" alt="Quantum logo" />
-            <h1>Quantum Computing Facts</h1>
+            <h1>Route Finder</h1>
             <div className="fact-container">
                 <div>
                     <p>Azure Branch Updated 6/05/24 03:21 pm</p>
